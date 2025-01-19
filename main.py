@@ -59,7 +59,16 @@ def inputing(text, var_save = "input_result"):
     try:
         vars[var_save] = input(f"({text})>> ")
     except:
-        printer(["Error. Prosess: main/inputing"])
+        printer(["Error. Prosess: main/input"])
+
+def equals_to_vars(var1, var2):
+    try:
+        if vars[var1] == vars[var2]:
+            printer(["True"])
+        else:
+            printer(["False"])
+    except:
+        printer(["Error. Prosess: main/equals_vars"])
 
 print("KirillkasCode v.0.0.1_alpha for x64")
 while True:
@@ -100,5 +109,9 @@ while True:
             inputing(text, var_save)
         else:
             inputing(text)
+    elif com == "equals_vars":
+        var1 = input("var1>> ")
+        var2 = input("var2>> ")
+        equals_to_vars(var1, var2)
     else:
         printer(["I can`t do this!"])
