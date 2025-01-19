@@ -7,14 +7,14 @@ def printer(args: list):
             returned += arg + " "
         print(returned)
     except Exception as e:
-        print(f"Error. Prosess: main/print {e}")
+        print([f"Error. Prosess: main/print. Description - {e}"])
 
 def setvar(name: str, value: any):
     global vars
     try:
         vars[name] = value
     except:
-        printer("Error. Prosess: main/setvar")
+        printer(["Error. Prosess: main/setvar"])
 
 def getvar(name: str):
     global vars
@@ -24,7 +24,7 @@ def getvar(name: str):
         else:
             printer(["Error. Prosess: main/getvar. Description: var not found"])
     except:
-        printer("Error. Prosess: main/getvar")
+        printer(["Error. Prosess: main/getvar"])
 
 def delvar(name: str):
     global vars
@@ -34,12 +34,18 @@ def delvar(name: str):
         else:
             printer(["Error. Prosess: main/delvar. Description: var not found"])
     except:
-        printer("Error. Prosess: main/delvar")
+        printer(["Error. Prosess: main/delvar"])
 
 def info():
-    printer(["Commands of KKC: \ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \nsetvar <name> <value> - create a var with name <name> and value <value> \ngetvar <name> - print a var <name>"])
+    printer(["Commands of KKC: \ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \nsetvar <name> <value> - create a var with name <name> and value <value> \ngetvar <name> - print a var <name> \ndelvar <name> - delete var <name> \nexit - exit from KKC \nmath <exp> - complete expression <exp>"])
 
-print("KirillkasCode v.0.0.1_alpha for x64")
+def math_func(exp):
+    try:
+        printer([str(eval(exp))])
+    except:
+        printer(["Error. Prosess: main/math_func"])
+
+print("KirillkasCode v.0.0.2_alpha for x64")
 while True:
     com = input(">> ")
     if com == "print":
@@ -59,5 +65,12 @@ while True:
     elif com == "delvar":
         name = input("name>> ")
         delvar(name)
+    elif com == "info":
+        info()
+    elif com == "exit":
+        raise SystemExit(0)
+    elif com == "math":
+        for_eval = input("expression>> ")
+        math_func(for_eval)
     else:
-        printer("I can`t do this!")
+        printer(["I can`t do this!"])
