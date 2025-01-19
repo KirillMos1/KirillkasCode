@@ -2,18 +2,16 @@ vars = {}
 
 def printer(args: list):
     try:
-        com_list.remove(0)
         returned = ""
         for arg in args:
-            returned += agr + " "
+            returned += arg + " "
         print(returned)
-    except:
-        printer("Error. Prosess: main/print")
+    except Exception as e:
+        print(f"Error. Prosess: main/print {e}")
 
 def setvar(name: str, value: any):
     global vars
     try:
-        
         vars[name] = value
     except:
         printer("Error. Prosess: main/setvar")
@@ -38,20 +36,28 @@ def delvar(name: str):
     except:
         printer("Error. Prosess: main/delvar")
 
+def info():
+    printer(["Commands of KKC: \ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \nsetvar <name> <value> - create a var with name <name> and value <value> \ngetvar <name> - print a var <name>"])
+
 print("KirillkasCode v.0.0.1_alpha for x64")
 while True:
     com = input(">> ")
-    com_list = com.split(" ")
-    if com_list[0] == "print":
-        printer(com_list)
-    elif com_list[0] == "setvar":
-        com_list.remove(0)
-        setvar(com_list[0], com_list[1])
-    elif com_list[0] == "getvar":
-        com_list.remove(0)
-        getvar(com_list[0])
-    elif com_list[0] == "delvar":
-        com_list.remove(0)
-        delvar(com_list[0])
+    if com == "print":
+        args = []
+        arg = "n"
+        while arg != "":
+            arg = input("arg>> ")
+            args.append(arg)
+        printer(args)
+    elif com == "setvar":
+        name = input("name>> ")
+        val = input("val>> ")
+        setvar(name, val)
+    elif com == "getvar":
+        name = input("name>> ")
+        getvar(name)
+    elif com == "delvar":
+        name = input("name>> ")
+        delvar(name)
     else:
-        print("I can`t do this!")
+        printer("I can`t do this!")
