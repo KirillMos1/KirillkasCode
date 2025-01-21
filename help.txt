@@ -1,0 +1,31 @@
+How use KirillkasCode
+
+In intepriter:
+In ">>" you can enter a command. If command is correct, intepriter ask arguments. After he return / not return result or return error. 
+Else intepriter return "I can`t do this!"
+
+In file:
+Format of file *.kkc:
+func1|arg1_arg2_arg3
+# you can set comment as here
+func2|arg1_arg2_arg3
+
+List of functions:
+(If write "func1 <arg1> <arg2> <arg3> read and understand as ">>func arg1>> arg2>>" in intepriter and "func1|arg1_arg2_arg3" in file)
+
+print <*argn> - return text in <*argn> (in all args; In intepriter it ask infinity arguments and stop when you press Enter 2 times).
+You can enter as argument var`s name as $<name>, where <name> - name of var
+
+input <text> <var> - ask a value to user with text <text> and save results in var <var>
+
+setvar <name> <value> - create var <name> with value <value>
+
+delvar <name> - delete var <name>
+
+math <expression> - calculate the expression <expression>
+
+math_vars <var1> <var2> <symbol> - calculate expression <<var1> <symbol> <var2>>
+
+exit - exit of program
+
+compiler <path> - compile and run file <path>

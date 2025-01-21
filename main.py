@@ -1,4 +1,4 @@
-vars = {}
+vars_list = {}
 
 def compiler(path):
     try:
@@ -14,8 +14,6 @@ def compiler(path):
                     printer(args)
                 elif func == "setvar":
                     setvar(args[0], args[1])
-                elif func == "getvar":
-                    getvar(args[0])
                 elif func == "delvar":
                     delvar(args[0])
                 elif func == "info":
@@ -48,7 +46,10 @@ def printer(args: list):
     try:
         returned = ""
         for arg in args:
-            returned += arg + " "
+            if arg.startswith("$"):
+                returned += str(vars_list[arg[1:]]) + " "
+            else:
+                returned += arg + " "
         print(returned)
     except Exception as e:
         print([f"Error. Prosess: main/print. Description - {e}"])
@@ -59,32 +60,22 @@ def setvar(name: str, value: any):
         if " " in name or name == "":
             printer(["Error. Prosess: main/setvar. Description: the name can`t be empty or contain a space"])
         else:
-            vars[name] = value
+            vars_list[name] = value
     except:
         printer(["Error. Prosess: main/setvar"])
-
-def getvar(name: str):
-    global vars
-    try:
-        if name in vars.keys():
-            printer([vars[name]])
-        else:
-            printer(["Error. Prosess: main/getvar. Description: var not found"])
-    except:
-        printer(["Error. Prosess: main/getvar"])
 
 def delvar(name: str):
     global vars
     try:
         if name in vars.keys():
-            del vars[name]
+            del vars_list[name]
         else:
             printer(["Error. Prosess: main/delvar. Description: var not found"])
     except:
         printer(["Error. Prosess: main/delvar"])
 
 def info():
-    printer(["Commands of KKC: \ncompiler <path> - run compile on file <path>\ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \nsetvar <name> <value> - create a var with name <name> and value <value> \ngetvar <name> - print a var <name> \ndelvar <name> - delete var <name> \nexit - exit from KKC \nmath <exp> - complete expression <exp> \nmath_vars <var1> <var2> <symbol> - math operation <symbol> with <var1> and <var2> \nequals_vars <var1> <var2> - equaling of vars (true / false) \ncompile <path> - compile file <path>"])
+    printer(["Commands of KKC: \ncompiler <path> - run compile on file <path>\ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \ngetvar <name> - print a var <name> \ndelvar <name> - delete var <name> \nexit - exit from KKC \nmath <exp> - complete expression <exp> \nmath_vars <var1> <var2> <symbol> - math operation <symbol> with <var1> and <var2> \nequals_vars <var1> <var2> - equaling of vars (true / false)"])
 
 def math_func(exp):
     try:
@@ -94,27 +85,27 @@ def math_func(exp):
 
 def math_vars(var1, var2, symbol):
     try:
-        returned = str(vars[var1]) + str(symbol) + str(vars[var2])
+        returned = str(vars_list[var1]) + str(symbol) + str(vars_list[var2])
         printer([eval(returned)])
     except:
         printer(["Error. Prosess: main/math_vars"])
 
 def inputing(text, var_save = "input_result"):
     try:
-        vars[var_save] = input(f"({text})>> ")
+        vars_list[var_save] = input(f"({text})>> ")
     except:
         printer(["Error. Prosess: main/input"])
 
 def equals_to_vars(var1, var2):
     try:
-        if vars[var1] == vars[var2]:
+        if vars_list[var1] == vars_list[var2]:
             printer(["True"])
         else:
             printer(["False"])
     except:
         printer(["Error. Prosess: main/equals_vars"])
 
-print("KirillkasCode v.0.1.0_alpha for x64")
+print("KirillkasCode v.0.0.1_alpha for x64")
 while True:
     com = input(">> ")
     if com == "compile":
