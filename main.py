@@ -122,9 +122,6 @@ while True:
         name = input("name>> ")
         val = input("val>> ")
         setvar(name, val)
-    elif com == "getvar":
-        name = input("name>> ")
-        getvar(name)
     elif com == "delvar":
         name = input("name>> ")
         delvar(name)
