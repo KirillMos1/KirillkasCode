@@ -29,3 +29,7 @@ math_vars <var1> <var2> <symbol> - calculate expression <<var1> <symbol> <var2>>
 exit - exit of program
 
 compiler <path> - compile and run file <path>
+
+repeat <repeats> <commands> - run <commands> <repets> times
+
+importing <mofule> - import module <module> in KKC
