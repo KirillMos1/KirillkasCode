@@ -75,7 +75,7 @@ def delvar(name: str):
         printer(["Error. Prosess: main/delvar"])
 
 def info():
-    printer(["Commands of KKC: \ncompiler <path> - run compile on file <path>\ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \ngetvar <name> - print a var <name> \ndelvar <name> - delete var <name> \nexit - exit from KKC \nmath <exp> - complete expression <exp> \nmath_vars <var1> <var2> <symbol> - math operation <symbol> with <var1> and <var2> \nequals_vars <var1> <var2> - equaling of vars (true / false)"])
+    printer(["Commands of KKC: \ncompiler <path> - run compile on file <path>\ninfo - this message \nprint <arg1> <arg2> <arg_n> - print a args \ngetvar <name> - print a var <name> \ndelvar <name> - delete var <name> \nexit - exit from KKC \nmath <exp> - complete expression <exp> \nmath_vars <var1> <var2> <symbol> - math operation <symbol> with <var1> and <var2> \nequals_vars <var1> <var2> - equaling of vars (true / false) \ncompile <path> - compile and run file <path>"])
 
 def math_func(exp):
     try:
