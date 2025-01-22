@@ -105,7 +105,7 @@ def equals_to_vars(var1, var2):
     except:
         printer(["Error. Prosess: main/equals_vars"])
 
-print("KirillkasCode v.0.0.1_alpha for x64")
+print("KirillkasCode v.0.1.2_alpha for x64")
 while True:
     com = input(">> ")
     if com == "compile":
