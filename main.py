@@ -173,7 +173,7 @@ def importing(lib):
     except:
         printer(["Error. Prosess: main/import"])
 
-print("KirillkasCode v.0.1.2_alpha for x64")
+print("KirillkasCode v.0.1.4_alpha for x64")
 while True:
     try:
         com = input(">> ")
