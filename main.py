@@ -1,4 +1,4 @@
-from lib.standart.delay import delay
+from lib.standart.delay import *
 
 vars_list = {}
 lib_imported = []
@@ -7,8 +7,11 @@ libs = {"delay" : ["delay"]}
 def compiler(path):
     try:
         file_opened = open(path, "r")
-        for line in file_opened.read().split("\n"):
+        file_read_splited = file_opened.read().split("\n")
+        for line in file_read_splited:
             if line.startswith("#"):
+                continue
+            elif line.strip(" ") == "":
                 continue
             else:
                 line_list = line.split("|")
@@ -35,6 +38,24 @@ def compiler(path):
                         inputing(args[0])
                 elif func == "equals_vars":
                     equals_to_vars(args[0], args[1])
+                elif func == "repeats":
+                    reps = args[0]
+                    coms = []
+                    nexted = file_read_splited.__next__() 
+                    while nexted != ";":
+                        coms.append(nexted)
+                        nexted = file_read_splited.__next__()
+                    repeats(int(reps), coms)
+                elif func == "import":
+                    importing(args[0])
+                elif func == "call":
+                    if args[0] in lib_imported:
+                        if args[0] == "delay" and args[1] == "delay":
+                            delay(int(args[2]))
+                        else:
+                            printer(["Error. Process: main/call: func not found"])
+                    else:
+                        printer(["Error. Prosess: main/import. Description: module not found"])
                 elif func == "":
                     continue
                 else:
@@ -150,64 +171,78 @@ def importing(lib):
         else:
             printer(["Error. Prosess: main/import. Description: module not found"])
     except:
-        printer(["Error. Prosess: main/import. Description: module not found"])
+        printer(["Error. Prosess: main/import"])
 
 print("KirillkasCode v.0.1.2_alpha for x64")
 while True:
-    com = input(">> ")
-    if com == "compile":
-        path = input("path (replace \\ to \\\\)>> ")
-        compiler(path)
-    elif com == "print":
-        args = []
-        arg = "n"
-        while arg != "":
-            arg = input("arg>> ")
-            args.append(arg)
-        printer(args)
-    elif com == "setvar":
-        name = input("name>> ")
-        val = input("val>> ")
-        setvar(name, val)
-    elif com == "delvar":
-        name = input("name>> ")
-        delvar(name)
-    elif com == "info":
-        info()
-    elif com == "exit":
-        raise SystemExit(0)
-    elif com == "math":
-        for_eval = input("expression>> ")
-        math_func(for_eval)
-    elif com == "math_vars":
-        var1 = input("var1>> ")
-        var2 = input("var2>> ")
-        symbol = input("symbol>> ")
-        math_vars(var1, var2, symbol)
-    elif com == "input":
-        text = input("text>> ")
-        var_save = input("var (if you want save result in standart var, press enter)>> ")
-        if var_save != "":
-            inputing(text, var_save)
+    try:
+        com = input(">> ")
+        if com == "compile":
+            path = input("path (replace \\ to \\\\)>> ")
+            compiler(path)
+        elif com == "print":
+            args = []
+            arg = "n"
+            while arg != "":
+                arg = input("arg>> ")
+                args.append(arg)
+            printer(args)
+        elif com == "setvar":
+            name = input("name>> ")
+            val = input("val>> ")
+            setvar(name, val)
+        elif com == "delvar":
+            name = input("name>> ")
+            delvar(name)
+        elif com == "info":
+            info()
+        elif com == "exit":
+            raise SystemExit(0)
+        elif com == "math":
+            for_eval = input("expression>> ")
+            math_func(for_eval)
+        elif com == "math_vars":
+            var1 = input("var1>> ")
+            var2 = input("var2>> ")
+            symbol = input("symbol>> ")
+            math_vars(var1, var2, symbol)
+        elif com == "input":
+            text = input("text>> ")
+            var_save = input("var (if you want save result in standart var, press enter)>> ")
+            if var_save != "":
+                inputing(text, var_save)
+            else:
+                inputing(text)
+        elif com == "equals_vars":
+            var1 = input("var1>> ")
+            var2 = input("var2>> ")
+            equals_to_vars(var1, var2)
+        elif com == "repeat":
+            repets = int(input("repeats (num)>> "))
+            args = []
+            arg = "n"
+            while arg != "":
+                arg = input("com (.kkc format)>> ")
+                args.append(arg)
+            args.remove("")
+            repeats(repets, args)
+        elif com == "":
+            continue
+        elif com == "import":
+            lib = input("module>> ")
+            importing(lib)
+        elif com == "call":
+            module = input("module>> ")
+            if module in lib_imported:
+                func = input("func>> ")
+                if module == "delay" and func == "delay":
+                    time = int(input("time>> "))
+                    delay(time)
+            else:
+                printer(["Error. Process main/call: module not imported"])
         else:
-            inputing(text)
-    elif com == "equals_vars":
-        var1 = input("var1>> ")
-        var2 = input("var2>> ")
-        equals_to_vars(var1, var2)
-    elif com == "repeat":
-        repets = int(input("repeats (num)>> "))
-        args = []
-        arg = "n"
-        while arg != "":
-            arg = input("com (.kkc format)>> ")
-            args.append(arg)
-        args.remove("")
-        repeats(repets, args)
-    elif com == "":
-        continue
-    elif com == "import":
-        lib = input("module>>")
-        importing(lib)
-    else:
-        printer(["I can`t do this!"])
+            printer(["I can`t do this!"])
+    except SystemExit:
+        raise SystemExit(0)
+    except:
+        printer(["Error. Process: main"])

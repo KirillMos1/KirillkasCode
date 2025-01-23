@@ -32,4 +32,6 @@ compiler <path> - compile and run file <path>
 
 repeat <repeats> <commands> - run <commands> <repets> times
 
-importing <mofule> - import module <module> in KKC
+importing <module> - import module <module> in KKC
+
+call <module> <func> <*argn> - complete <func> from <module> with arguments <*argn>
