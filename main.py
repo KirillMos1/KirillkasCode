@@ -1,4 +1,10 @@
-from lib.standart.delay import *
+from modules.delay.main import *
+# from standart.classes.integer import Integer
+# from standart.classes.floating import Floating
+# from standart.classes.string import String
+# from standart.classes.array import Array
+# from standart.classes.d_array import DArray
+# from standart.classes.u_array import UArray
 
 vars_list = {}
 lib_imported = []
@@ -8,15 +14,20 @@ def compiler(path):
     try:
         file_opened = open(path, "r")
         file_read_splited = file_opened.read().split("\n")
+        itered = iter(file_read_splited)
         for line in file_read_splited:
             if line.startswith("#"):
                 continue
             elif line.strip(" ") == "":
                 continue
             else:
-                line_list = line.split("|")
+                line_list = line.split("|", maxsplit = 1)
+                if len(line_list) < 2:
+                    raise Exception("Invalid command format")
                 func = line_list[0]
                 args = line_list[1].split("_")
+                if len(args) < 2:
+                    raise Exception("Invalid arguments format")
                 if func == "print":
                     printer(args)
                 elif func == "setvar":
@@ -39,13 +50,11 @@ def compiler(path):
                 elif func == "equals_vars":
                     equals_to_vars(args[0], args[1])
                 elif func == "repeats":
-                    reps = args[0]
+                    args[0] = int(args[0])
                     coms = []
-                    nexted = file_read_splited.__next__() 
-                    while nexted != ";":
-                        coms.append(nexted)
-                        nexted = file_read_splited.__next__()
-                    repeats(int(reps), coms)
+                    for com in args[1].replace("[", "").replace("]", "").split(", "):
+                        coms.append(com)
+                    repeats(args[0], coms)
                 elif func == "import":
                     importing(args[0])
                 elif func == "call":
@@ -173,7 +182,7 @@ def importing(lib):
     except:
         printer(["Error. Prosess: main/import"])
 
-print("KirillkasCode v.0.1.4_alpha for x64")
+print("KirillkasCode v.0.1.5_alpha for x64")
 while True:
     try:
         com = input(">> ")
